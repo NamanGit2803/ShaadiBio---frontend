@@ -27,6 +27,7 @@ export default function PersonalDetailsForm({ setStep }) {
     } = useForm({
         defaultValues: personal
     });
+    
 
     useEffect(() => {
         register("gender", {

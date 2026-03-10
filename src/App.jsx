@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateBio from "./pages/dashboard/CreateBio";
-import Templates from "./pages/dashboard/Templates";
+import Templates from "./pages/dashboard/templates/Templates";
+import TemplateView from "./pages/dashboard/templates/TemplateView";
 import Preview from "./pages/dashboard/Preview";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dashboard/create" element={<CreateBio />} />
           <Route path="/dashboard/templates" element={<Templates />} />
+          <Route path="/dashboard/templates/:templateName" element={<TemplateView />} />
           <Route path="/dashboard/preview" element={<Preview />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

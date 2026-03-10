@@ -8,12 +8,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from 'react-router-dom';
 import { Separator } from "@/components/ui/separator"
+import { useNavigate } from 'react-router-dom';
 
 const UserDropdown = () => {
 
+    const navigate = useNavigate()
+
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.reload();
+        navigate('/')
     };
 
 

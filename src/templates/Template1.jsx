@@ -3,17 +3,22 @@ import { useBioStore } from "@/hooks/useBioStore";
 export default function Template1() {
     const { personal, family, education, horoscope, photo, contact, contactSectionHide } = useBioStore();
 
-    console.log(horoscope)
-
     return (
-        <div className="max-w-4xl mx-auto bg-white border rounded-xl shadow-sm overflow-hidden">
+        <div className="relative max-w-4xl mx-auto bg-white border rounded-xl shadow-sm overflow-hidden">
+
+            {/* FREE VERSION RIBBON */}
+            {!localStorage.getItem("token") && (
+                <div className="absolute -left-24 top-8 rotate-[-35deg] border-y-4 border-black px-25 py-1 text-xl font-bold tracking-wider bg-transparent">
+                    FREE VERSION
+                </div>
+            )}
 
             {/* Header */}
             <div className="bg-gray-100 p-6 text-center border-b">
                 <h1 className="text-3xl font-bold tracking-wide">
                     {personal.name ?? 'Name'}
                 </h1>
-                <p className="text-muted-foreground mt-1">
+                <p className="text-gray-600 mt-1">
                     Marriage Biodata
                 </p>
             </div>
@@ -50,17 +55,19 @@ export default function Template1() {
                     </div>
 
                     {/* Contact */}
-                    {!contactSectionHide && <div>
-                        <h2 className="text-lg font-semibold border-b pb-1">
-                            Contact Details
-                        </h2>
+                    {!contactSectionHide && (
+                        <div>
+                            <h2 className="text-lg font-semibold border-b pb-1">
+                                Contact Details
+                            </h2>
 
-                        <div className="text-sm mt-2 space-y-1">
-                            <p><span className="font-medium">Mobile Number:</span> {contact.mobile}</p>
-                            <p><span className="font-medium">Email:</span> {contact.email}</p>
-                            <p><span className="font-medium">Address:</span> {contact.address}</p>
+                            <div className="text-sm mt-2 space-y-1">
+                                <p><span className="font-medium">Mobile Number:</span> {contact.mobile}</p>
+                                <p><span className="font-medium">Email:</span> {contact.email}</p>
+                                <p><span className="font-medium">Address:</span> {contact.address}</p>
+                            </div>
                         </div>
-                    </div>}
+                    )}
                 </div>
 
                 {/* Right Section */}
@@ -102,26 +109,31 @@ export default function Template1() {
                         </div>
                     </div>
 
-
-
                     {/* Horoscope */}
-                    {Object.keys(horoscope).length > 0 && <div>
-                        <h2 className="text-lg font-semibold border-b pb-1">
-                            Horoscope Details
-                        </h2>
+                    {Object.keys(horoscope).length > 0 && (
+                        <div>
+                            <h2 className="text-lg font-semibold border-b pb-1">
+                                Horoscope Details
+                            </h2>
 
-                        <div className="grid gap-2 text-sm mt-2">
-                            <p><span className="font-medium">Rashi:</span> {horoscope.rashi}</p>
-                            <p><span className="font-medium">Nakshatra:</span> {horoscope.nakshatra}</p>
-                            <p><span className="font-medium">Gothra:</span> {horoscope.gothra}</p>
-                            <p><span className="font-medium">Birth Time:</span> {horoscope.birthTime}</p>
-                            <p><span className="font-medium">Birth Place:</span> {horoscope.birthPlace}</p>
+                            <div className="grid gap-2 text-sm mt-2">
+                                {horoscope.rashi && <p><span className="font-medium">Rashi:</span> {horoscope.rashi}</p>}
+                                {horoscope.nakshatra && <p><span className="font-medium">Nakshatra:</span> {horoscope.nakshatra}</p>}
+                                {horoscope.gothra && <p><span className="font-medium">Gothra:</span> {horoscope.gothra}</p>}
+                                {horoscope.birthTime && <p><span className="font-medium">Birth Time:</span> {horoscope.birthTime}</p>}
+                                {horoscope.birthPlace && <p><span className="font-medium">Birth Place:</span> {horoscope.birthPlace}</p>}
+                            </div>
                         </div>
-                    </div>}
-
+                    )}
                 </div>
-            </div>
 
+                {/* Website watermark */}
+                {!localStorage.getItem('token') && (
+                    <span className="relative left-1 bottom-1 font-bold">
+                        ShaadiBio.com
+                    </span>
+                )}
+            </div>
         </div>
     );
 }

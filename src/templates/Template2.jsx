@@ -4,7 +4,15 @@ export default function Template2() {
     const { personal, family, education, horoscope, photo, contactSectionHide, contact } = useBioStore();
 
     return (
-        <div className="w-full bg-linear-to-br from-pink-50 to-purple-50 p-6 rounded-xl shadow-lg">
+        <div className="relative w-[794px] min-h-[1123px] mx-auto bg-linear-to-br from-pink-50 to-purple-50 rounded-xl shadow-lg overflow-hidden p-10">
+
+            {/* FREE VERSION RIBBON */}
+            {!localStorage.getItem("token") && (
+                <div className="absolute -left-20 top-10 rotate-[-35deg] border-y-4 border-black px-25 py-1 text-lg font-bold tracking-widest bg-white/80 z-10">
+                    FREE VERSION
+                </div>
+            )}
+
             {/* Header */}
             <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold tracking-wide text-fourth">
@@ -14,8 +22,7 @@ export default function Template2() {
             </div>
 
             {/* Photo + Basic Info */}
-            <div className="flex flex-col md:flex-row items-center gap-6 bg-white p-6 rounded-xl shadow">
-                {/* Photo */}
+            <div className="flex items-center gap-6 bg-white p-6 rounded-xl shadow mb-6">
                 {photo ? (
                     <img
                         src={photo}
@@ -23,14 +30,17 @@ export default function Template2() {
                         className="w-40 h-40 rounded-xl object-cover border-4 border-purple-300 shadow"
                     />
                 ) : (
-                    <div className="w-40 h-40 rounded-xl bg-gray-200 flex justify-center items-center" >Photo</div>
+                    <div className="w-40 h-40 rounded-xl bg-gray-200 flex justify-center items-center">
+                        Photo
+                    </div>
                 )}
 
-                {/* Personal Info */}
                 <div className="flex-1">
-                    <h2 className="text-2xl font-semibold text-gray-800">{personal.name ?? 'Name'}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800">
+                        {personal.name ?? "Name"}
+                    </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 mt-3 text-dark">
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 mt-3 text-dark">
                         <p><span className="font-medium">Age:</span> {personal.age}</p>
                         <p><span className="font-medium">Gender:</span> {personal.gender}</p>
                         <p><span className="font-medium">Date of Birth:</span> {personal.dob}</p>
@@ -45,27 +55,26 @@ export default function Template2() {
                 </div>
             </div>
 
-            {/* Section Divider */}
-            <div className="my-6 h-1 bg-purple-200 rounded-full"></div>
-
-            {/* Education & Profession */}
+            {/* Education */}
             <div className="bg-white p-6 rounded-xl shadow mb-6">
                 <h3 className="text-xl font-semibold text-fourth mb-3">
                     Education & Profession
                 </h3>
 
-                <div className="grid grid-cols-1 gap-2 text-dark">
+                <div className="grid gap-2 text-dark">
                     <p><span className="font-medium">Highest Qualification:</span> {education.qualification}</p>
                     <p><span className="font-medium">Profession:</span> {education.profession}</p>
                     <p><span className="font-medium">Income:</span> {education.income}</p>
                 </div>
             </div>
 
-            {/* Family Details */}
+            {/* Family */}
             <div className="bg-white p-6 rounded-xl shadow mb-6">
-                <h3 className="text-xl font-semibold text-fourth mb-3">Family Details</h3>
+                <h3 className="text-xl font-semibold text-fourth mb-3">
+                    Family Details
+                </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 text-dark">
+                <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-dark">
                     <p><span className="font-medium">Father:</span> {family.fatherName}</p>
                     <p><span className="font-medium">Father Occupation:</span> {family.fatherOccupation}</p>
                     <p><span className="font-medium">Mother:</span> {family.motherName}</p>
@@ -76,31 +85,44 @@ export default function Template2() {
                 </div>
             </div>
 
-            {/* Horoscope (Optional) */}
+            {/* Horoscope */}
             {Object.keys(horoscope).length > 0 && (
                 <div className="bg-white p-6 rounded-xl shadow mb-6">
-                    <h3 className="text-xl font-semibold text-fourth mb-3">Horoscope Details</h3>
+                    <h3 className="text-xl font-semibold text-fourth mb-3">
+                        Horoscope Details
+                    </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 text-dark">
-                        <p><span className="font-medium">Rashi:</span> {horoscope.rashi}</p>
-                        <p><span className="font-medium">Nakshatra:</span> {horoscope.nakshatra}</p>
-                        <p><span className="font-medium">Gothra:</span> {horoscope.gothra}</p>
-                        <p><span className="font-medium">Birth Time:</span> {horoscope.birthTime}</p>
-                        <p><span className="font-medium">Birth Place:</span> {horoscope.birthPlace}</p>
+                    <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-dark">
+                        {horoscope.rashi && <p><span className="font-medium">Rashi:</span> {horoscope.rashi}</p>}
+                        {horoscope.nakshatra && <p><span className="font-medium">Nakshatra:</span> {horoscope.nakshatra}</p>}
+                        {horoscope.gothra && <p><span className="font-medium">Gothra:</span> {horoscope.gothra}</p>}
+                        {horoscope.birthTime && <p><span className="font-medium">Birth Time:</span> {horoscope.birthTime}</p>}
+                        {horoscope.birthPlace && <p><span className="font-medium">Birth Place:</span> {horoscope.birthPlace}</p>}
                     </div>
                 </div>
             )}
 
-            {/* Contact section  */}
-            {!contactSectionHide && <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-semibold text-fourth mb-3">Contact Details</h3>
+            {/* Contact */}
+            {!contactSectionHide && (
+                <div className="bg-white p-6 rounded-xl shadow">
+                    <h3 className="text-xl font-semibold text-fourth mb-3">
+                        Contact Details
+                    </h3>
 
-                <div className="grid grid-cols-1 gap-y-2 text-dark">
-                    <p><span className="font-medium">Mobile Number:</span> {contact.mobile}</p>
-                    <p><span className="font-medium">Email:</span> {contact.email}</p>
-                    <p><span className="font-medium">Address:</span> {contact.address}</p>
+                    <div className="grid gap-y-2 text-dark">
+                        <p><span className="font-medium">Mobile Number:</span> {contact.mobile}</p>
+                        <p><span className="font-medium">Email:</span> {contact.email}</p>
+                        <p><span className="font-medium">Address:</span> {contact.address}</p>
+                    </div>
                 </div>
-            </div>}
+            )}
+
+            {/* Website watermark */}
+            {!localStorage.getItem("token") && (
+                <span className="absolute bottom-2 left-2 font-bold">
+                    ShaadiBio.com
+                </span>
+            )}
         </div>
     );
 }

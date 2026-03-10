@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +12,25 @@ import HoroscopeForm from "@/components/form/HoroscopeForm";
 import ProfilePhoto from "@/components/form/ProfilePhoto";
 import ContactForm from "@/components/form/ContactForm";
 
-// Zustand
-import { useBioStore } from "@/hooks/useBioStore";
-
 export default function CreateBio() {
     const navigate = useNavigate();
-    const { personal } = useBioStore();
 
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(() => {
+        const savedStep = localStorage.getItem("step");
+        return savedStep ? Number(savedStep) : 1;
+    });
+
+    useEffect(() => {
+        if (localStorage.getItem('step')) {
+            setStep(Number(localStorage.getItem('step')))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('step', step)
+    }, [step])
+
+
 
     const next = () => setStep((prev) => prev + 1);
     const back = () => setStep((prev) => prev - 1);
@@ -65,11 +76,11 @@ export default function CreateBio() {
                 {/* Form Card */}
                 <Card className="shadow-lg">
                     <CardContent className="p-6">
-                        {step === 1 && <PersonalDetailsForm setStep={setStep}/>}
-                        {step === 2 && <FamilyDetailsForm setStep={setStep}/>}
-                        {step === 3 && <EducationProfessionForm setStep={setStep}/>}
-                        {step === 4 && <ContactForm setStep={setStep}/>}
-                        {step === 5 && <HoroscopeForm setStep={setStep}/>}
+                        {step === 1 && <PersonalDetailsForm setStep={setStep} />}
+                        {step === 2 && <FamilyDetailsForm setStep={setStep} />}
+                        {step === 3 && <EducationProfessionForm setStep={setStep} />}
+                        {step === 4 && <ContactForm setStep={setStep} />}
+                        {step === 5 && <HoroscopeForm setStep={setStep} />}
                         {step === 6 && <ProfilePhoto />}
                     </CardContent>
                 </Card>
@@ -87,7 +98,7 @@ export default function CreateBio() {
                     {step < 6 ? (
                         <Button onClick={next}>Next</Button>
                     ) : (
-                        <Button onClick={() => navigate("/dashboard/templates")}>
+                        <Button onClick={() => {navigate("/dashboard/templates"),localStorage.removeItem("step");}}>
                             View Templates
                         </Button>
                     )}
