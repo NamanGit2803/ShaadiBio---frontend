@@ -17,7 +17,7 @@ export default function Login() {
     const onSubmit = async(data) => {
         try {
             setLoading(true)
-            const res = await api.post("/auth/login", {
+            const res = await api.post("/api/auth/login", {
                 email: data.email,
                 password: data.password,
             });
